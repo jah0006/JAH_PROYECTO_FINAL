@@ -1,4 +1,4 @@
-public class Casilla {
+public abstract class Casilla {
     protected String nombre;
 
     public Casilla(String nombre) {
