@@ -6,11 +6,10 @@ public class Premio extends Casilla{
 
     public void darPremio(Jugador jugador){
         jugador.setSaldo(jugador.getSaldo()+20);
-        System.out.println("(Premio ingresado correctamente)");
     }
     
     @Override
     public String toString() {
-        return "-------------------------------------------\n======= "+this.nombre+" =======";
+        return "======= "+this.nombre+" =======";
     }
 }

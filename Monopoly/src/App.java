@@ -101,11 +101,11 @@ public class App {
 
                 for (int i = 0; i < jugadores.length; i++) {
                     if (jugadores[i].getCarcel()==0) {
-                        System.out.println("TURNO DE "+jugadores[i].getFigura()+" (Jugador "+(i+1)+")");
+                        System.out.println("TURNO DE "+jugadores[i].getFigura().toUpperCase()+" (Jugador "+(i+1)+")");
                         System.out.println("Tira el dado (Enter)");
                         sc.nextLine();
                         numDado = Dado.tirarDado();
-                        System.out.println("Ha salido el numero "+numDado);
+                        System.out.println("\t<< "+numDado+" >>\n");
 
                         //VUELVO A PONER TODO EL TABLERO CON 0
                         for (int h = 0; h < tablero.length; h++) {
@@ -129,8 +129,10 @@ public class App {
 
                         for (int j = 0; j < numDado; j++) {
                             if (jugadores[i].getCasillaX()==0 && jugadores[i].getCasillaY()==0 && jugadores[i].isComenzado()) { //si ha comenzado la partida y pasa por 0,0 se le suman 20
-                                jugadores[i].setSaldo(jugadores[i].getSaldo()+20);              
-                            }else if (jugadores[i].getCasillaX()==0 && jugadores[i].getCasillaY()<9) {        //lado superior del tablero
+                                jugadores[i].setSaldo(jugadores[i].getSaldo()+20); 
+                                System.out.println("Casilla de Salida. Recibes 20ME");
+                                jugadores[i].setCasillaY(jugadores[i].getCasillaY()+1);            
+                            }else if (jugadores[i].getCasillaX()==0 && jugadores[i].getCasillaY()<9) {  //lado superior del tablero
                                 jugadores[i].setCasillaY(jugadores[i].getCasillaY()+1);
                                 jugadores[i].setComenzado(true);
 
@@ -140,7 +142,7 @@ public class App {
                             }else if (jugadores[i].getCasillaX()==9 && jugadores[i].getCasillaY()>0) {  //lado inferior del tablero
                                 jugadores[i].setCasillaY(jugadores[i].getCasillaY()-1);
 
-                            }else if (jugadores[i].getCasillaY()==9 && jugadores[i].getCasillaX()>0) {  //lado izquierdo del tablero
+                            }else if (jugadores[i].getCasillaY()==0 && jugadores[i].getCasillaX()>0) {  //lado izquierdo del tablero
                                 jugadores[i].setCasillaX(jugadores[i].getCasillaX()-1);
                             }
 
@@ -159,7 +161,7 @@ public class App {
                             for (int j2 = 0; j2 < tablero.length; j2++) {
                                 System.out.print(tablero[j][j2]);
                             }System.out.println();
-                        }
+                        }System.out.println();
 
                             // diferentes acciones segun la casilla donde se caiga
 
@@ -278,6 +280,9 @@ public class App {
                 break;
             }
         }
+
+        sc.nextLine();
+        sc.close();
 
 
     }

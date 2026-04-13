@@ -6,10 +6,9 @@ public class Multa extends Casilla{
     
     public void darMulta(Jugador jugador){
         jugador.setSaldo(jugador.getSaldo()-20);
-        System.out.println("(Multa efectuada correctamente)");
     }
     @Override
     public String toString() {
-        return "-------------------------------------------\n======= "+this.nombre+" =======";
+        return "======= "+this.nombre+" =======";
     }
 }
