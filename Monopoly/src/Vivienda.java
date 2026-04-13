@@ -1,7 +1,7 @@
 public class Vivienda extends Casilla{
     private double precio;
     private boolean disponibilidad;
-    private Jugador propietario;
+    private String disponible;
 
     public Vivienda(String nombre, double precio) {
         super(nombre);
@@ -25,18 +25,14 @@ public class Vivienda extends Casilla{
         this.disponibilidad = disponibilidad;
     }
 
-    public Jugador getPropietario() {
-        return propietario;
-    }
-
-    public void setPropietario(Jugador propietario) {
-        this.propietario = propietario;
-    }
-
     @Override
     public String toString() {
-        return "Vivienda [nombre=" + nombre + ", precio=" + precio + ", disponibilidad=" + disponibilidad
-                + ", propietario=" + propietario + "]";
+        if (this.disponibilidad) {
+            this.disponible = "Si";
+        }else{
+            this.disponible = "No";
+        }
+        return "-------------------------------------------\n======= "+this.nombre+" =======\n\t| Precio: "+this.precio+"\n\t| Disponibilidad: "+this.disponible+" está disponible\n-------------------------------------------";
     }
 
     
