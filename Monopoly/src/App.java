@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
@@ -36,20 +37,20 @@ public class App {
         Vivienda vivienda9 = new Vivienda("Calle Real", 40);
         Vivienda vivienda10 = new Vivienda("Calle Jazmines", 15);
         Vivienda vivienda11 = new Vivienda("Avenida de la Juventud", 30);
-        Vivienda vivienda12 = new Vivienda("Avenida Niceto Alcala-Zamora", 50);
-        Vivienda vivienda13 = new Vivienda("Calle Lozano Sidro", 50);
-        Vivienda vivienda14 = new Vivienda("Calle Santa Ana", 50);
-        Vivienda vivienda15 = new Vivienda("Calle Alta", 50);
-        Vivienda vivienda16 = new Vivienda("Calle Tercia", 50);
-        Vivienda vivienda17 = new Vivienda("Calle Jaén", 50);
-        Vivienda vivienda18 = new Vivienda("Calle El Naranjo", 50);
-        Vivienda vivienda19 = new Vivienda("Plaza de San Pedro", 50);
-        Vivienda vivienda20 = new Vivienda("Plaza de Andalucia", 50);
-        Vivienda vivienda21 = new Vivienda("Calle San Luis", 50);
-        Vivienda vivienda22 = new Vivienda("Avenida de América", 50);
-        Vivienda vivienda23 = new Vivienda("Calle Buen Suceso", 50);
-        Vivienda vivienda24 = new Vivienda("Calle Málaga", 50);
-        Vivienda vivienda25 = new Vivienda("Calle Loja", 50);
+        Vivienda vivienda12 = new Vivienda("Avenida Niceto Alcala-Zamora", 10);
+        Vivienda vivienda13 = new Vivienda("Calle Lozano Sidro", 10);
+        Vivienda vivienda14 = new Vivienda("Calle Santa Ana", 5);
+        Vivienda vivienda15 = new Vivienda("Calle Alta", 5);
+        Vivienda vivienda16 = new Vivienda("Calle Tercia", 5);
+        Vivienda vivienda17 = new Vivienda("Calle Jaén", 5);
+        Vivienda vivienda18 = new Vivienda("Calle El Naranjo", 5);
+        Vivienda vivienda19 = new Vivienda("Plaza de San Pedro", 5);
+        Vivienda vivienda20 = new Vivienda("Plaza de Andalucia", 40);
+        Vivienda vivienda21 = new Vivienda("Calle San Luis", 5);
+        Vivienda vivienda22 = new Vivienda("Avenida de América", 10);
+        Vivienda vivienda23 = new Vivienda("Calle Buen Suceso", 10);
+        Vivienda vivienda24 = new Vivienda("Calle Málaga", 25);
+        Vivienda vivienda25 = new Vivienda("Calle Loja", 20);
 
         Vacia vacia = new Vacia("      ");
 
@@ -92,22 +93,22 @@ public class App {
         //Creacion Scanner y variables que se utilizaran
         Scanner sc = new Scanner(System.in);
         int numDado = 0;
-        int eleccion = 0;
 
         //comienza el bucle de la partida
-        while (true) {
+        try {
+            while (true) {
             if (jugador1.getSaldo()>0 && jugador2.getSaldo()>0) {
                 
 
                 for (int i = 0; i < jugadores.length; i++) {
                     if (jugadores[i].getCarcel()==0) {
-                        System.out.println("TURNO DE "+jugadores[i].getFigura().toUpperCase()+" (Jugador "+(i+1)+")");
+                        System.out.println("\n\n\n#############################################\n\nTURNO DE "+jugadores[i].getFigura().toUpperCase()+" (Jugador "+(i+1)+") | "+jugadores[i].getSaldo()+" ME");
                         System.out.println("Tira el dado (Enter)");
                         sc.nextLine();
                         numDado = Dado.tirarDado();
                         System.out.println("\t<< "+numDado+" >>\n");
 
-                        //VUELVO A PONER TODO EL TABLERO CON 0
+                        //VUELVO A PONER EL TABLERO CON 0
                         for (int h = 0; h < tablero.length; h++) {
                             for (int j = 0; j < tablero.length; j++) {
                                 if (h == 0) {
@@ -130,9 +131,10 @@ public class App {
                         for (int j = 0; j < numDado; j++) {
                             if (jugadores[i].getCasillaX()==0 && jugadores[i].getCasillaY()==0 && jugadores[i].isComenzado()) { //si ha comenzado la partida y pasa por 0,0 se le suman 20
                                 jugadores[i].setSaldo(jugadores[i].getSaldo()+20); 
-                                System.out.println("Casilla de Salida. Recibes 20ME");
+                                System.out.println("Casilla de Salida. Recibes 20ME\n");
                                 jugadores[i].setCasillaY(jugadores[i].getCasillaY()+1);            
-                            }else if (jugadores[i].getCasillaX()==0 && jugadores[i].getCasillaY()<9) {  //lado superior del tablero
+                            }
+                            if (jugadores[i].getCasillaX()==0 && jugadores[i].getCasillaY()<9) {  //lado superior del tablero
                                 jugadores[i].setCasillaY(jugadores[i].getCasillaY()+1);
                                 jugadores[i].setComenzado(true);
 
@@ -220,25 +222,17 @@ public class App {
                             System.out.println(multa4);
                             System.out.println("Sales de fiesta al Gadabout, \ncomo los cubatas son baratos \nse te olvida que cuestan dinero.\nPierdes 20ME\n-------------------------------------------");
                             multa4.darMulta(jugadores[i]);
+
+
+                        }else {                                                                                             //resto casillas (viviendas)
+                            System.out.println(tableroCasillas[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()]);
+                            System.out.println("Tienes "+jugadores[i].getSaldo()+" ME");
+
+                            //Conversion casting => Pasar el objeto Casilla[x][y] a Vivienda
+                            Vivienda calleActual = (Vivienda) (tableroCasillas[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()]);
+
+                            calleActual.comprarVivienda(jugadores[i]);
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -280,7 +274,10 @@ public class App {
                 break;
             }
         }
-
+    } catch (NoSuchElementException nsee) {
+        
+    } 
+    
         sc.nextLine();
         sc.close();
 

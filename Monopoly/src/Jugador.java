@@ -1,9 +1,6 @@
-import java.util.Arrays;
-
 public class Jugador {
     private String figura;
     private double saldo;
-    private Vivienda[] propiedades;
     private int casillaX;
     private int casillaY;
     private int carcel;
@@ -29,12 +26,6 @@ public class Jugador {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    public Vivienda[] getPropiedades() {
-        return this.propiedades;
-    }
-    public void setPropiedades(Vivienda[] propiedades) {
-        this.propiedades = propiedades;
-    }
     public int getCasillaX() {
         return this.casillaX;
     }
@@ -58,8 +49,7 @@ public class Jugador {
 
     @Override
     public String toString() {
-        return "Jugador [figura=" + figura + ", saldo=" + saldo + ", propiedades=" + Arrays.toString(propiedades)
-                + ", casillaX=" + casillaX + ", casillaY=" + casillaY + "]";
+        return "Jugador [figura=" + figura + ", saldo=" + saldo +  ", casillaX=" + casillaX + ", casillaY=" + casillaY + "]";
     }
     public int getCarcel() {
         return carcel;

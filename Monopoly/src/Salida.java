@@ -6,7 +6,7 @@ public class Salida extends Casilla{
 
     @Override
     public String toString() {
-        return "Casilla de Salida. Recibes 20ME";
+        return "";
     }
     
 }
