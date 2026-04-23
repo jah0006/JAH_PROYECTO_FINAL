@@ -5,7 +5,7 @@ public class Premio extends Casilla{
     }
 
     public void darPremio(Jugador jugador){
-        jugador.setSaldo(jugador.getSaldo()+20);
+        jugador.setSaldo(jugador.getSaldo()+10);
     }
     
     @Override

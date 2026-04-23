@@ -1,0 +1,3 @@
+Jugador: Zapato || Puntuacion: 25200 || Fecha y hora: 2026-04-23T21:22:11.408863900
+Jugador: Zapato || Puntuacion: 12000 || Fecha y hora: 2026-04-23T21:24:19.405984500
+Jugador: Perro || Puntuacion: 10250 || Fecha y hora: 2026-04-23T21:25:48.100771200

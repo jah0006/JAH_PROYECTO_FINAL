@@ -78,9 +78,9 @@ public class Vivienda extends Casilla {
             // si el jugador actual no es el propietario, se efectua el pago al propietario
             if (jugador != this.propietario) {
                 System.out.println("No se puede comprar esta vivienda.\nPertenece a " + this.propietario.getFigura()
-                        + "\nLe pagas " + (this.precio * 0.1) + " ME");
-                jugador.setSaldo(jugador.getSaldo() - (this.precio * 0.1));
-                this.propietario.setSaldo(this.propietario.getSaldo() + (this.precio * 0.1));
+                        + "\nLe pagas " + (this.precio * 0.5) + " ME");
+                jugador.setSaldo(jugador.getSaldo() - (this.precio * 0.5));
+                this.propietario.setSaldo(this.propietario.getSaldo() + (this.precio * 0.5));
             } else {
                 System.out.println("Esta vivienda es de tu propiedad");
             }
