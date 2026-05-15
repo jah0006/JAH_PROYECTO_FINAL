@@ -6,7 +6,7 @@ public class Salida extends Casilla{
 
     @Override
     public String toString() {
-        return "";
+        return "Casilla de Salida. Cuando avances recibirás tu dinero";
     }
     
 }

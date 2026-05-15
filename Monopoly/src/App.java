@@ -106,7 +106,7 @@ public class App {
             while(eleccion!=0){
 
                 //menu inicial para comenzar la partida o ver puntuaciones
-                System.out.println("[1] Comenzar la partida\n[2] Ver listado de puntuaciones");
+                System.out.println("[1] Comenzar la partida\n[2] Ver listado de puntuaciones\n[0] Salir");
                 eleccion = Integer.parseInt(sc.nextLine());
                 
                 if (eleccion==1) {
@@ -120,9 +120,24 @@ public class App {
 
                     // Array de jugadores
                     Jugador[] jugadores = { jugador1, jugador2 };
+
+                    
+                    //Pongo todas las casillas vivienda sin propietario y disponibles
+
+                    for (int j = 0; j < tableroCasillas.length; j++) {
+                        for (int j2 = 0; j2 < tableroCasillas.length; j2++) {
+                            
+                            if (tableroCasillas[j][j2].getClass().equals(Vivienda.class)) {
+                                calleActual = (Vivienda) tableroCasillas[j][j2];
+                                calleActual.setPropietario(null);
+                                calleActual.setDisponibilidad(true);
+                            }
+                        }
+                    }
                     
                     // comienza el bucle de la partida
                     while (jugador1.getSaldo() > 0 && jugador2.getSaldo() > 0){
+
         
                         for (int i = 0; i < jugadores.length; i++) {
                             if (jugadores[i].getCarcel() == 0) {
@@ -154,42 +169,37 @@ public class App {
                                 // movimiento del jugador a lo largo del tablero, segun el resultado del dado
         
                                 for (int j = 0; j < numDado; j++) {
-                                    if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 0
-                                            && jugadores[i].isComenzado()) { // si ha comenzado la partida y pasa por 0,0 se le
-                                                                             // suman 20
+
+                                    // si ha comenzado la partida y pasa por 0,0 se le suman 20
+                                    if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 0 && jugadores[i].isComenzado()) { 
                                         jugadores[i].setSaldo(jugadores[i].getSaldo() + 20);
                                         System.out.println("Casilla de Salida. Recibes 20ME\n");
                                         jugadores[i].setCasillaY(jugadores[i].getCasillaY() + 1);
                                     }
-                                    if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() < 9) { // lado superior
-                                                                                                             // del tablero
+
+                                    //lado superior del tablero
+                                    if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() < 9) { 
                                         jugadores[i].setCasillaY(jugadores[i].getCasillaY() + 1);
                                         jugadores[i].setComenzado(true);
         
-                                    } else if (jugadores[i].getCasillaY() == 9 && jugadores[i].getCasillaX() < 9) { // lado
-                                                                                                                    // derecho
-                                                                                                                    // del
-                                                                                                                    // tablero
+                                    //lado derecho del tablero
+                                    } else if (jugadores[i].getCasillaY() == 9 && jugadores[i].getCasillaX() < 9) { 
                                         jugadores[i].setCasillaX(jugadores[i].getCasillaX() + 1);
         
-                                    } else if (jugadores[i].getCasillaX() == 9 && jugadores[i].getCasillaY() > 0) { // lado
-                                                                                                                    // inferior
-                                                                                                                    // del
-                                                                                                                    // tablero
+                                    //lado inferior del tablero
+                                    } else if (jugadores[i].getCasillaX() == 9 && jugadores[i].getCasillaY() > 0) { 
                                         jugadores[i].setCasillaY(jugadores[i].getCasillaY() - 1);
         
-                                    } else if (jugadores[i].getCasillaY() == 0 && jugadores[i].getCasillaX() > 0) { // lado
-                                                                                                                    // izquierdo
-                                                                                                                    // del
-                                                                                                                    // tablero
+                                    //lado izquierdo del tablero
+                                    } else if (jugadores[i].getCasillaY() == 0 && jugadores[i].getCasillaX() > 0) {
                                         jugadores[i].setCasillaX(jugadores[i].getCasillaX() - 1);
                                     }
         
                                 }
         
+
                                 // MODIFICA EL TABLERO CON LA POSICION DE LOS JUGADORES
-                                if (jugadores[0].getCasillaX() == jugadores[1].getCasillaX()
-                                        && jugadores[0].getCasillaY() == jugadores[1].getCasillaY()) {
+                                if (jugadores[0].getCasillaX() == jugadores[1].getCasillaX() && jugadores[0].getCasillaY() == jugadores[1].getCasillaY()) {
                                     tablero[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()] = " X ";
                                 } else {
                                     tablero[jugadores[0].getCasillaX()][jugadores[0].getCasillaY()] = " 1 ";
@@ -205,10 +215,13 @@ public class App {
                                 }
                                 System.out.println();
         
+
                                 // diferentes acciones segun la casilla donde se caiga
         
                                 // CASILLAS ESPECIALES
-                                if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 0) { // casilla de salida
+
+                                    // casilla de salida
+                                if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 0) { 
                                     System.out.println(tableroCasillas[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()]);
         
                                     // casilla carcel
@@ -217,69 +230,72 @@ public class App {
                                     System.out.println(tableroCasillas[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()]);
                                     carcel1.enviarCarcel(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 3) { // casilla
-                                                                                                                 // premio1
+                                    // casilla premio1
+                                } else if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 3) {
                                     System.out.println(premio1);
                                     System.out.println(
                                             "Has ido a ver la Fuente de la Salud \ny te has encontrado dinero del que \nsuelen tirar a la fuente.\nGanas 10ME\n-------------------------------------------");
                                     premio1.darPremio(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 3 && jugadores[i].getCasillaY() == 9) { // casilla
-                                                                                                                 // premio2
+                                    // casilla premio2
+                                } else if (jugadores[i].getCasillaX() == 3 && jugadores[i].getCasillaY() == 9) {
                                     System.out.println(premio2);
                                     System.out.println(
                                             "Paseando por el Balcon del Adarve, \nte encuentras un billete en el suelo.\nGanas 10ME\n-------------------------------------------");
                                     premio2.darPremio(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 6 && jugadores[i].getCasillaY() == 0) { // casilla
-                                                                                                                 // premio3
+                                    // casilla premio3
+                                } else if (jugadores[i].getCasillaX() == 6 && jugadores[i].getCasillaY() == 0) {
                                     System.out.println(premio3);
                                     System.out.println(
                                             "Dando un paseo por la Villa, \nse cae una maceta y ves que \ntiene billetes dentro.\nGanas 10ME\n-------------------------------------------");
                                     premio3.darPremio(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 9 && jugadores[i].getCasillaY() == 6) { // casilla
-                                                                                                                 // premio4
+                                    // casilla premio4
+                                } else if (jugadores[i].getCasillaX() == 9 && jugadores[i].getCasillaY() == 6) {
                                     System.out.println(premio4);
                                     System.out.println(
                                             "En el paseillo le robas el sombrero a \nun hombre que estaba pidiendo.\nPoco ético, pero ganas dinero.\nGanas 10ME\n-------------------------------------------");
                                     premio4.darPremio(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 6) { // casilla
-                                                                                                                 // multa1
+                                    //casilla multa1
+                                } else if (jugadores[i].getCasillaX() == 0 && jugadores[i].getCasillaY() == 6) {
                                     System.out.println(multa1);
                                     System.out.println(
                                             "Sales de fiesta a la Museum \ny te pegan una atracada por el \nprecio de la entrada y una copa.\nPierdes 20ME\n-------------------------------------------");
                                     multa1.darMulta(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 3 && jugadores[i].getCasillaY() == 0) { // casilla
-                                                                                                                 // multa2
+                                    //casilla multa2
+                                } else if (jugadores[i].getCasillaX() == 3 && jugadores[i].getCasillaY() == 0) {
                                     System.out.println(multa2);
                                     System.out.println(
                                             "Vas a cenar al Cortijero, \nla comida está buenísima \npero un poco caro.\nPierdes 20ME\n-------------------------------------------");
                                     multa2.darMulta(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 6 && jugadores[i].getCasillaY() == 9) { // casilla
-                                                                                                                 // multa3
+                                    //casilla multa3
+                                } else if (jugadores[i].getCasillaX() == 6 && jugadores[i].getCasillaY() == 9) {
                                     System.out.println(multa3);
                                     System.out.println(
                                             "Te cruzas con la Feria de Priego, \nacabas solo a las 5 de la mañana y te atraca \nun grupo de 'diferentes' que pasaba.\nPierdes 20ME\n-------------------------------------------");
                                     multa3.darMulta(jugadores[i]);
         
-                                } else if (jugadores[i].getCasillaX() == 9 && jugadores[i].getCasillaY() == 3) { // casilla
-                                                                                                                 // multa4
+                                    //casilla multa4
+                                } else if (jugadores[i].getCasillaX() == 9 && jugadores[i].getCasillaY() == 3) {
                                     System.out.println(multa4);
                                     System.out.println(
                                             "Sales de fiesta al Gadabout, \ncomo los cubatas son baratos \nse te olvida que cuestan dinero.\nPierdes 20ME\n-------------------------------------------");
                                     multa4.darMulta(jugadores[i]);
         
-                                } else { // resto casillas (viviendas)
+                                    // resto casillas (viviendas)
+                                } else { 
+                                        //muestro la casilla en la que esta el jugador
                                     System.out.println(tableroCasillas[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()]);
+
+                                        //muestro el saldo que tiene el jugador
                                     System.out.println("Tienes " + jugadores[i].getSaldo() + " ME");
         
                                     // Conversion casting => Pasar el objeto Casilla[x][y] a Vivienda
-                                    calleActual = (Vivienda) (tableroCasillas[jugadores[i].getCasillaX()][jugadores[i]
-                                            .getCasillaY()]);
+                                    calleActual = (Vivienda) (tableroCasillas[jugadores[i].getCasillaX()][jugadores[i].getCasillaY()]);
         
                                     calleActual.comprarVivienda(jugadores[i]);
                                 }
@@ -289,18 +305,23 @@ public class App {
                                         "\n\nEl jugador " + jugadores[i].getFigura() + " esta en la cárcel. Pierde turno\n\n");
                                 jugadores[i].setCarcel(0);
                             }
+                            
+                            //si el jugador se queda sin dinero, se acaba la partida
+                            if (jugadores[i].getSaldo()<=0) {
+                                break;
+                            }
         
                         }
-        
+
                     }
                     // MENSAJE DE FIN DE PARTIDA, AL TERMINAR EL BUCLE, YA QUE UNO DE LOS JUGADORES NO TIENE DINERO
-                    System.out.println("======= FIN DE LA PARTIDA =======");
+                    System.out.println("\n\n======= FIN DE LA PARTIDA =======\n\n");
+
+
                     //guardamos la puntuación del ganador
         
                     try {
                         BufferedWriter bw = new BufferedWriter(new FileWriter("puntuaciones.txt",true));
-        
-        
         
                         for (int j = 0; j < jugadores.length; j++) {
                             if (jugadores[j].getSaldo()>0) {
@@ -313,7 +334,6 @@ public class App {
                                         if ((h == 0 || h == 9 || v == 9 || v == 0) && tableroCasillas[h][v].getClass() == Vivienda.class) {
                                             //convierto la casilla a vivienda para poder ejecutar los metodos
                                             propiedadGanador = (Vivienda) (tableroCasillas[h][v]);
-        
         
                                             //dentro de que son viviendas, se comprueba que su propietario es el jugador ganador
                                             //si es el propietario, el precio de la vivienda se suma a la puntuacion
@@ -342,8 +362,10 @@ public class App {
                                 bw.close();
                             }
                         }
-                    } catch (Exception e) {
-                        
+                    } catch (IOException ioe) {
+                        System.out.println("Error en la escritura del archivo");
+                    } catch (Exception e){
+                        System.out.println("Error desconocido");
                     }
     
                 //este if muestra las puntuaciones almacenadas
@@ -357,6 +379,8 @@ public class App {
                         }
                     } catch (IOException ioe) {
                         System.out.println("Error en la lectura del archivo");
+                    }  catch (Exception e){
+                        System.out.println("Error desconocido");
                     }
                 }
             }
